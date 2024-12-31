@@ -40,49 +40,58 @@ This dataset comprises of 25,000 images, each with a resolution of 150x150 pixel
   - Captures shape and edge information
   - Particularly effective for structural elements
 
-## Model Performance Comparison
+# Model Performance Comparison
 
-<div align="center">
+## Traditional Machine Learning Models
 
-### Traditional Machine Learning Models
-| Model Type | Feature Type | Accuracy | Training Time | Inference Time/Image |
-|------------|-------------|-----------|---------------|---------------------|
-| Perceptron | Original | 40.0% | 7m 29s | 0.000467s |
-| Perceptron | HSV | 34.0% | 7m 14.6s | 0.000167s |
-| Perceptron | HOG | **43.0%** | 9m 3.2s | 0.001633s |
+### Perceptron Results
+| Feature Extraction | Accuracy | Training Time | Inference/Image (s) |
+|-------------------|----------|---------------|-------------------|
+| Raw               | 27%      | 24m 49.5s    | 0.4965           |
+| HSV               | 34%      | 13m 35.1s    | 0.2717           |
+| HOG               | 43%      | 24m 1.6s     | 0.4805           |
 
-### Logistic Regression Models
-| Model Type | Feature Type | Accuracy | Training Time | Inference Time/Image |
-|------------|-------------|-----------|---------------|---------------------|
-| Logistic Regression | Original | 41.0% | 14m 7.7s | 0.00073s |
-| Logistic Regression | HSV | 42.0% | 17m 3.0s | 0.00390s |
-| Logistic Regression | HOG | **49.0%** | 23m 30.0s | 0.00617s |
+### Logistic Regression Results
+| Feature Extraction | Accuracy | Training Time | Inference/Image (s) |
+|-------------------|----------|---------------|-------------------|
+| Raw               | 40%      | 29m 16.4s    | 0.5855           |
+| HSV               | 44%      | 55m 34.5s    | 1.1115           |
+| HOG               | 43%      | 30m 55.6s    | 0.6185           |
 
+### SVM Results
+| Feature Extraction (PCA) | Accuracy | Training Time | Inference/Image (s) |
+|-------------------------|----------|---------------|-------------------|
+| HSV (PCA=50)           | 63%      | 10m 12.9s    | 0.2043           |
+| HOG (PCA=100)          | 63%      | 8m 7.6s      | 0.1625           |
+| ResNet (PCA=128)       | 71%      | 4m 54.8s     | 0.0983           |
 
-### Support Vector Machines (SVM)
-| Model Type | Feature Type | Accuracy | Training Time | Inference Time/Image |
-|------------|-------------|-----------|---------------|---------------------|
-| SVM | ResNet + PCA(128) | 62.50% | 2.02s | 0.017395s |
-| SVM | HSV + PCA(50) | 53.00% | 1.53s | 0.015857s |
-| SVM | HOG + PCA(100) | **68.00%** | 1.84s | 0.002034s |
+## Deep Learning Models
 
-### Deep Learning Models
-| Model Type | Feature Type | Accuracy | Training Time | Inference Time/Image |
-|------------|-------------|-----------|---------------|---------------------|
-| CNN | Naive | 79.70% | 13m 33.6s | 0.002034s |
-| CNN | Multimodal | **81.93%** | 13m 37.5s | 0.001954s |
-| ResNet50 | Naive | 69.60% | 54m 47.4s | 0.015857s |
-| ResNet50 | Multimodal | 79.80% | 58m 24.6s | 0.017395s |
+### CNN Results
+| Feature Extraction  | Accuracy | Training Time | Inference/Image (s) |
+|--------------------|----------|---------------|-------------------|
+| Naïve              | 79.9%    | 15m 45.8s    | 0.0003           |
+| HSV                | 74.0%    | 13m 9.2s     | 0.0002           |
+| HOG                | 79.1%    | 14m 37.8s    | 0.0003           |
+| Multimodal (PCA)   | 80.6%    | 22.1s            | 0.0003           |
+
+### ResNet Results
+| Feature Extraction  | Accuracy | Training Time | Inference/Image (s) |
+|--------------------|----------|---------------|-------------------|
+| Naïve              | 69.7%    | 69m 46.8s    | 0.0002           |
+| HSV                | 36.0%    | 69m 13.0s    | 0.0001           |
+| HOG                | 65.0%    | 65m 47.7s    | 0.0002           |
+| Multimodal (PCA)   | 79.9%    | 41m 45.9s    | 0.0003           |
 
 </div>
 
 ## Key Findings
 
-1. **Best Performance**: The Multimodal CNN achieved the highest accuracy at 81.93% with relatively fast classification time.
+1. **Best Performance**: The Multimodal CNN achieved the highest accuracy at 80.6% with relatively fast classification time.
 
 2. **Model Progression**:
    - Basic linear models (Perceptron, Logistic Regression) provided baseline performance
-   - SVM with HOG features showed significant improvement
+   - SVM with Resnet showed significant improvement
    - Deep learning models (CNN, ResNet50) achieved the best results overall
 
 3. **Feature Engineering Impact**:
